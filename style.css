@@ -1,0 +1,3896 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box
+}
+html{
+  background:rgb(63,80,48)
+}
+body{
+  font-family:'Archivo',Arial,sans-serif;
+  color:#f8e9d6;
+  overflow-x:hidden
+}
+
+/* Scroll ke liye overall page ki extra height */
+#scroller{
+  height:1550vh
+}
+/* Custom Dark Scrollbar for the entire website, drawers & modals */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #120e0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f2b20;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e0602a;
+}
+
+/* Main fixed stage jahan website ka visual content show hota hai */
+#stage{
+  position:fixed;
+  inset:0;
+  z-index:1
+}
+
+/* WebGL canvas ko full screen rakhna
+   pointer events off hain taake mouse interactions block na hon */
+#gl{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2;
+  pointer-events:none
+}
+
+/* Har section full screen cover karta hai.
+   Start mein sections hidden rehte hain. */
+.sc{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  visibility:hidden
+}
+
+
+/* FRESHFIND LOADER */
+
+/* Page load hone par full screen loader show hota hai */
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:rgb(63,80,48);
+  display:grid;
+  place-items:center;
+  opacity:1;
+  visibility:visible;
+  overflow:hidden;
+
+  /* Loader ko smoothly hide/show karne ke liye transition */
+  transition:
+    opacity .5s ease,
+    visibility .5s ease;
+}
+
+/* Loader ke andar SVG ko center mein place kar rahe hain */
+#loader svg{
+  width:min(430px,72vw);
+  height:min(430px,72vw);
+  overflow:visible;
+
+  position:absolute;
+  left:50%;
+  top:50%;
+
+  /* SVG ko exactly center mein rakhna */
+  transform:
+    translate(-50%,-50%)
+    scale(1);
+
+  /* SVG ke around halka glow effect */
+  filter:
+    drop-shadow(0 0 18px rgba(255,255,255,.08));
+
+  /* Loader ke end mein SVG ki position aur size smoothly change hoti hai */
+  transition:
+    left 1.2s cubic-bezier(.76,0,.18,1),
+    top 1.2s cubic-bezier(.76,0,.18,1),
+    transform 1.2s cubic-bezier(.76,0,.18,1);
+}
+
+
+/* Percentage completely hidden */
+
+/* Loading percentage ko screen par show nahi karna */
+#pct{
+  display:none !important;
+}
+
+
+/* One single sweep */
+
+/* Loader ke sweep element ko center se rotate kar rahe hain */
+.loader-sweep{
+  transform-box:fill-box;
+  transform-origin:center;
+
+  /* Rotation animation sirf ek baar chalegi */
+  animation:
+    loaderSpin 1.8s linear 1;
+}
+
+
+/* Loader ke sweep ki rotation define karne wali animation */
+@keyframes loaderSpin{
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+
+/* Zoom into actual plant position */
+
+/* Zooming class lagne par SVG plant ki actual position ki taraf move karta hai
+   aur size mein zoom hota hai */
+#loader.zooming svg{
+
+  left:var(--plant-x);
+  top:var(--plant-y);
+
+  transform:
+    translate(-50%,-50%)
+    scale(7);
+
+}
+
+
+/* Finally disappear */
+
+/* Animation complete hone ke baad loader invisible ho jata hai */
+#loader.done{
+
+  opacity:0;
+  visibility:hidden;
+
+}
+
+
+
+/* HEADER*/
+
+/* Website ka fixed top header */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:10;
+
+  /* Header ke andar items ko ek line mein properly align karna */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+
+  /* Header ki spacing */
+  padding:13px 24px;
+
+  /* Transparent dark background + blur effect */
+  background:rgba(18,20,13,.18);
+  backdrop-filter:blur(12px);
+
+  /* Header ke neeche halki border */
+  border-bottom:1px solid rgba(255,255,255,.12);
+
+  /* Header text ki basic styling */
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase
+}
+
+
+/* Brand/logo area */
+
+/* Brandmark ke andar logo aur text ko side by side rakhna */
+.brandmark{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:90px;
+
+  color:#f8e9d6;
+  text-decoration:none
+}
+
+/* Main brand name ka size */
+.brandmark strong{
+  font-size:17px;
+  letter-spacing:-.04em
+}
+
+/* Brand ke chhote supporting text ki styling */
+.brandmark span{
+  font-size:9px;
+  opacity:.65;
+  letter-spacing:.12em
+}
+
+
+/* Main navigation */
+
+/* Navigation links ko center mein arrange karna */
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:22px;
+  flex:1
+}
+
+
+/* Har navigation link ki basic styling */
+nav a{
+  cursor:pointer;
+  padding:7px 0;
+
+  color:#f8e9d6;
+  text-decoration:none;
+  white-space:nowrap;
+
+  /* Default mein links thore transparent hain */
+  opacity:.78;
+
+  /* Hover/active effect smooth banane ke liye */
+  transition:.25s
+}
+
+
+/* Hover ya active link ko fully visible karna */
+nav a:hover,
+nav a.on{
+  opacity:1
+}
+
+
+/* Active navigation link ke neeche line */
+nav a.on{
+  border-bottom:1px solid #f8e9d6
+}
+
+
+/* Header ke right-side buttons */
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+
+
+/* Common navigation pill/button style */
+.nav-pill{
+  border:1px solid rgba(248,233,214,.5);
+  background:rgba(255,255,255,.08);
+  color:#f8e9d6;
+  border-radius:20px;
+  padding:8px 11px;
+
+  /* Button ki font setting */
+  font:700 10px Archivo,Arial;
+
+  cursor:pointer;
+  white-space:nowrap
+}
+
+
+/* Chat button ka special orange look */
+.chat-nav{
+  border-color:#f0a15c;
+  background:#e0602a;
+  color:#1b120b
+}
+
+
+/* Music button ke andar icon aur text ko align karna */
+.music-nav{
+  display:flex;
+  align-items:center;
+  gap:6px
+}
+
+
+/* Music icon ki bars ko ek row mein rakhna */
+.music-nav .bars{
+  display:inline-flex;
+  gap:2px;
+  align-items:end;
+  height:11px
+}
+
+
+/* Music icon ki individual bars */
+.music-nav .bars i{
+  width:2px;
+  height:6px;
+  background:currentColor;
+  display:block
+}
+
+
+/* Second bar thori lambi */
+.music-nav .bars i:nth-child(2){
+  height:10px
+}
+
+
+/* Third bar ki height set karna */
+.music-nav .bars i:nth-child(3){
+  height:7px
+}
+
+
+/* Alternate logo hidden hai */
+.logo{
+  display:none
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+/* Hero section ka main green background
+   aur subtle grid texture */
+.s0{
+  background-color:rgb(63,80,48);
+
+  background-image:
+  repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,.13) 0 44px,
+    transparent 44px 88px
+  ),
+  repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,.13) 0 44px,
+    transparent 44px 88px
+  )
+}
+
+
+/* Hero ka sabse bada main heading */
+.big{
+  position:absolute;
+  left:2.5vw;
+  top:15vh;
+
+  /* Screen size ke hisaab se heading responsive rahegi */
+  font-size:min(12.5vw,220px);
+
+  font-weight:800;
+  font-stretch:100%;
+  letter-spacing:-.04em;
+  line-height:.9;
+
+  color:#fbe9d2;
+  white-space:nowrap
+}
+
+
+/* Hero ke top area mein chhota label/tag */
+.tag{
+  position:absolute;
+  left:44vw;
+  top:16px;
+
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.06em;
+
+  /* Tag ko thora left shift karna */
+  transform:translateX(-10px);
+
+  text-transform:uppercase
+}
+
+
+/* Hero ka glass-style information box */
+.glass{
+  position:absolute;
+  left:2.5vw;
+  bottom:9vh;
+
+  width:230px;
+  padding:14px;
+
+  /* Transparent glass effect */
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(8px);
+
+  font-size:14px;
+  font-weight:700;
+  line-height:1.3;
+
+  height:24vh;
+
+  /* Box ke content ko vertical direction mein arrange karna */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between
+}
+
+
+/* Glass box ke bottom mein small text */
+.glass small{
+  font-weight:400;
+  text-align:right;
+  font-size:13px;
+
+  /* Small text ke upar dotted separator */
+  border-top:1px dotted #fff8;
+  padding-top:10px
+}
+
+
+/* Hero ke right side ka descriptive text */
+.side{
+  position:absolute;
+  right:4vw;
+  top:40vh;
+
+  width:28vw;
+
+  /* Text responsive size ke saath adjust hota hai */
+  font-size:clamp(16px,1.9vw,28px);
+
+  line-height:1.3;
+  font-weight:500
+}
+
+
+/* Right side ka vertical tab */
+.tab{
+  position:absolute;
+  right:0;
+  top:36px;
+
+  background:#fbe9d2;
+  color:#222;
+
+  padding:14px 8px;
+
+  /* Text ko vertical direction mein show karna */
+  writing-mode:vertical-rl;
+
+  font-size:11px;
+  font-weight:700
+}
+
+
+/* Hero ke bottom center mein "more" indicator */
+.more{
+  position:absolute;
+  bottom:22px;
+  left:50%;
+
+  /* Element ko horizontally exact center karna */
+  transform:translateX(-50%);
+
+  font-size:10px;
+  letter-spacing:.06em;
+  font-weight:600;
+  text-transform:uppercase
+}
+
+
+/* More indicator ke saath circular arrow icon */
+.more:before{
+  content:"⌄";
+  display:inline-block;
+
+  width:22px;
+  height:22px;
+  line-height:18px;
+  text-align:center;
+
+  /* Dotted circular border */
+  border:1px dotted #fff;
+  border-radius:50%;
+
+  /* Arrow aur text ke beech spacing */
+  margin-right:8px
+}
+
+/* INTRO*/
+
+/* Intro section ka dark brown background
+   aur bottom-left se subtle radial glow */
+.dark{
+  background:
+    radial-gradient(
+      circle at 0 100%,
+      #6b3a22,
+      transparent 42%
+    ),
+    #17110d
+}
+
+
+/* Intro section ka main heading */
+.s1 h2{
+  position:absolute;
+  left:6vw;
+  top:42vh;
+
+  /* Heading screen size ke according responsive rahegi */
+  font-size:clamp(28px,3.6vw,56px);
+
+  line-height:1;
+  font-weight:700;
+  color:#d8c6b0
+}
+
+
+/* Intro section ka description paragraph */
+.s1 p{
+  position:absolute;
+  right:6vw;
+  top:40vh;
+
+  width:22vw;
+
+  /* Paragraph ka font responsive hai */
+  font-size:clamp(16px,1.7vw,26px);
+
+  line-height:1.3
+}
+
+
+/* Intro ke side/bottom mein small note */
+.note{
+  position:absolute;
+  right:26px;
+  bottom:18px;
+
+  font-size:9px;
+  text-transform:uppercase;
+  font-weight:700;
+
+  width:130px;
+
+  /* Note ke upar dotted separator */
+  border-top:1px dotted #fff8;
+  padding-top:6px
+}
+
+
+/*POWER*/
+
+/* Power section ka main large heading */
+.s2 h2{
+  position:absolute;
+  top:15vh;
+  width:100%;
+
+  /* Heading ko horizontally center karna */
+  text-align:center;
+
+  /* Large responsive heading */
+  font-size:clamp(40px,8vw,130px);
+
+  font-weight:600;
+  letter-spacing:-.04em;
+  font-stretch:90%
+}
+
+
+/* Power heading ke neeche orange sub-heading */
+.s2 h3{
+  position:absolute;
+
+  /* Heading ki position ke relative */
+  top:calc(9vh + 8vw);
+
+  left:53vw;
+
+  color:#f0642b;
+
+  font-size:clamp(11px,1.3vw,18px);
+  font-weight:700
+}
+
+
+/* Power section ka right-side text */
+.s2 .t{
+  position:absolute;
+  right:15vw;
+  bottom:14vh;
+
+  font-size:clamp(11px,1.1vw,15px);
+  font-weight:700;
+  line-height:1.3;
+
+  /* Text ko right aligned rakhna */
+  text-align:right
+}
+
+
+/* Power section ka left-side small heading/info */
+.s2 .h{
+  position:absolute;
+  left:15vw;
+  bottom:14vh;
+
+  width:150px;
+
+  text-align:center;
+
+  font-size:10px;
+  font-weight:600;
+
+  /* Small dotted separator */
+  border-top:1px dotted #fff8;
+  padding-top:8px
+}
+
+
+/* Power section ka hidden colorful glow layer */
+.glow{
+  position:absolute;
+  inset:0;
+
+  /* Default mein glow invisible hai */
+  opacity:0;
+
+  /* Glow ko smoothly visible karna */
+  transition:opacity .6s;
+
+  /* Colors continuously rotate karte hain */
+  animation:hue 6s linear infinite;
+
+  /* Different sides se colorful inner shadows */
+  box-shadow:
+    inset 70px 0 120px -50px #ffb02e,
+    inset -70px 0 120px -50px #3a8cff,
+    inset 0 -70px 120px -50px #d63cff,
+    inset 0 70px 120px -50px #ffe14a
+}
+
+
+/* Mouse section ke upar ho to glow visible ho jata hai */
+.s2:hover .glow{
+  opacity:1
+}
+
+
+/* Glow ke colors ko continuously rotate karne wali animation */
+@keyframes hue{
+  to{
+    filter:hue-rotate(360deg)
+  }
+}
+
+
+/*GALLERY*/
+
+/* Gallery ka caption/text area */
+.cap{
+  position:absolute;
+  left:3vw;
+  top:38vh;
+
+  /* Caption responsive size ke saath adjust hota hai */
+  font-size:clamp(14px,1.6vw,22px);
+
+  line-height:1.15;
+
+  /* Caption gallery content ke upar visible rahe */
+  z-index:3
+}
+
+
+/* Caption ke bold part ko separate line mein show karna */
+.cap b{
+  display:block;
+  font-weight:600;
+
+  /* Bold text normal caption se thora bara */
+  font-size:1.25em
+}
+
+
+/* Gallery ke center mein dashed frame */
+.frame{
+  position:absolute;
+  left:50%;
+  top:50%;
+
+  width:310px;
+  height:410px;
+
+  /* Frame ko exact center mein place karna */
+  transform:translate(-50%,-50%);
+
+  border:1px dashed #fffa;
+
+  /* Frame gallery elements ke upar rahe */
+  z-index:3;
+
+  /* Frame mouse clicks ko block na kare */
+  pointer-events:none
+}
+
+
+/* Gallery ke image tiles ki basic positioning */
+.tile{
+  position:absolute;
+
+  /* Background image ko poore tile mein cover karna */
+  background-size:cover;
+
+  /* Image ko center se position karna */
+  background-position:center;
+
+  z-index:2
+}
+
+
+/* Gallery videos ko image tiles ke exact size mein fit karna */
+
+/* Video ko apne tile ki full width aur height dena */
+.tile video{
+  width:100%;
+  height:100%;
+
+  /* Video ko extra inline gap ke baghair block element banana */
+  display:block;
+
+  /* Video ko tile ke andar properly crop/fit karna */
+  object-fit:cover;
+}
+
+/*FEATURE PANELS*/
+
+/* First feature panel ka green-to-beige gradient background */
+.f0{
+  background:linear-gradient(
+    135deg,
+    rgb(107,125,90),
+    rgb(138,154,91),
+    rgb(216,199,163)
+  )
+}
+
+
+/* Second feature panel ka warm brown gradient */
+.f1{
+  background:linear-gradient(
+    105deg,
+    #7b4c28,
+    #b27a49 45%,
+    #875530
+  )
+}
+
+
+/* PERFECTLY LOCAL ka purana grid overlay remove */
+
+/* Feature panel ke background mein table image ko
+   diagonal shape mein display karna */
+.f1:before{
+  content:"";
+
+  /* Image ko panel ke right side ki taraf position karna */
+  position:absolute;
+  left:38%;
+  top:-10%;
+
+  width:75%;
+  height:130%;
+
+  /* Image ko thora diagonal rotate karna */
+  transform:rotate(-7deg);
+
+  /* Background image */
+  background-image:url("images/table-01.jpg");
+
+  /* Image ko poori available area mein cover karna */
+  background-size:cover;
+
+  /* Image ka center portion show karna */
+  background-position:center;
+
+  /* Image repeat na ho */
+  background-repeat:no-repeat;
+
+  /* Image ko background layer mein rakhna */
+  z-index:0;
+}
+
+
+/* Feature panel ka translucent information area */
+.panel{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+
+  /* Panel ki width */
+  width:26vw;
+  min-width:250px;
+
+  /* Panel ke andar content ki spacing */
+  padding:70px 28px 34px;
+
+  /* Transparent glass-style background */
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(14px);
+
+  /* Panel ke content ko vertically arrange karna */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between
+}
+
+
+/* Feature image ko available area ke according fit karna */
+.feature-image{
+  width:100%;
+  height:100%;
+  min-height:260px;
+
+  /* Image ko background ke through show karna */
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+
+/* Circular feature icon */
+.ic{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+
+  /* Icon ke peeche translucent circle */
+  background:rgba(255,255,255,.25);
+
+  /* Icon ko exact center mein rakhna */
+  display:grid;
+  place-items:center;
+
+  font-size:20px;
+
+  /* Icon ke neeche spacing */
+  margin-bottom:18px
+}
+
+
+/* Feature panel ka small heading */
+.panel h4{
+  font-size:13px;
+  margin-bottom:8px
+}
+
+
+/* Feature panel ka description */
+.panel p{
+  font-size:14px;
+  line-height:1.35
+}
+
+
+/* Feature panel ka large bottom text */
+.panel .big2{
+  /* Text ke upar dotted separator */
+  border-top:1px dotted #fff8;
+
+  padding-top:26px;
+
+  /* Text responsive size ke saath adjust hota hai */
+  font-size:clamp(20px,2.2vw,32px);
+
+  font-weight:700;
+  text-align:right;
+  line-height:1.1
+}
+
+
+/* Feature panel ke bottom-right mein small footer */
+.fm{
+  position:absolute;
+  right:26px;
+  bottom:20px;
+
+  text-align:right;
+  font-size:10px
+}
+
+
+/* Footer ke italic/large symbol ya text ki styling */
+.fm i{
+  display:block;
+  font-size:22px;
+
+  /* Serif font use karna */
+  font-family:Georgia,serif;
+
+  margin-top:4px
+}
+
+
+/*FRESH PRODUCTS — FIXED LAYOUT */
+
+/* Fresh Products section ka dark base background
+   aur top-right se subtle orange glow */
+.s7{
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(224,96,42,.13),
+      transparent 32%
+    ),
+    #0b0908;
+
+  overflow:hidden
+}
+
+
+/* ---------- PRODUCT HEADER ---------- */
+
+/* Products section ke top par main heading area */
+.products-head{
+  position:absolute;
+  left:5vw;
+  right:5vw;
+  top:4vh;
+  font-size: 30px;
+ 
+
+  /* Heading aur status ko horizontally arrange karna */
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+
+  gap:30px;
+
+  /* Header ke neeche subtle divider */
+  border-bottom:1px solid rgba(248,233,214,.16);
+  padding-bottom:18px;
+
+  /* Header ko products content ke upar rakhna */
+  z-index:5;
+}
+
+
+/* Product title ka maximum width */
+.products-title{
+  max-width:650px;
+}
+
+
+/* Product title ka small orange label */
+.products-title small{
+  display:block;
+  color:#f3a15c;
+
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.16em;
+
+  /* Label aur main heading ke beech spacing */
+  margin-bottom:9px;
+}
+
+
+/* Main Fresh Products heading */
+.products-title h2{
+  margin: 0px;
+
+  /* Large responsive heading */
+  font-size:clamp(42px,4.6vw,68px);
+
+  line-height:.9;
+  font-weight:800;
+  letter-spacing:-.06em;
+
+  /* Heading ek hi line mein rahe */
+  white-space:nowrap;
+}
+
+
+/* Products heading ke neeche short description */
+.products-title p{
+  margin-top:16px;
+  max-width:420px;
+
+  color:#bba998;
+
+  font-size:12px;
+  line-height:1.5
+}
+
+
+/* Product availability/status indicator */
+.product-status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  /* Status ko ek line mein rakhna */
+  white-space:nowrap;
+
+  padding-bottom:4px;
+
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase
+}
+
+
+/* Small circular status indicator */
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+
+  background:#78a95c;
+
+  /* Dot ke around subtle glow/ring */
+  box-shadow:0 0 0 5px rgba(120,169,92,.1);
+}
+
+
+/* ---------- PRODUCT COUNT + FILTERS ---------- */
+
+/* Product count aur filter buttons ka toolbar */
+.product-tools{
+  position:absolute;
+  left:5vw;
+  right:5vw;
+  top:22vh;
+
+  min-height:30px;
+
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+
+  gap:28px;
+  
+  /* Toolbar ko product cards ke upar rakhna */
+  z-index:6;
+}
+
+
+/* Total products ka count */
+.product-count{
+  font-size:10px;
+  color:#b79a84;
+  letter-spacing:.12em;
+  font-weight:800;
+
+  /* Count ko single line mein rakhna */
+  white-space:nowrap;
+}
+
+
+/* Filter buttons ka container */
+.product-filters{
+  display:flex;
+  gap:6px;
+
+  /* Zarurat par filters next line par aa sakte hain */
+  flex-wrap:wrap;
+}
+
+
+/* Individual product filter button */
+.product-filter{
+  border:1px solid #4d3424;
+  background:transparent;
+  color:#bba998;
+
+  border-radius:20px;
+  padding:6px 11px;
+
+  /* Filter button ki font styling */
+  font:700 8px Archivo,Arial;
+
+  letter-spacing:.08em;
+  cursor:pointer;
+
+  /* Hover/active state smoothly change karna */
+  transition:.25s;
+}
+
+
+/* Hover ya selected filter ka active look */
+.product-filter:hover,
+.product-filter.active{
+  background:#3a2417;
+  border-color:#e0602a;
+  color:#f8e9d6;
+}
+
+/* ---------- PRODUCT GRID ---------- */
+
+/* Saare product cards ko grid layout mein arrange karna */
+.product-grid{
+  position: absolute;
+  left: 5vw;
+  right: 5vw;
+  top: 28vh;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  z-index: 3;
+  /* Agar 15 products hain toh overflow scroll enable karein taake overlap na ho */
+  max-height: 62vh;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.season-grid{
+  position: absolute;
+  left: 5vw;
+  right: 5vw;
+  top: 30vh;
+  bottom: 8vh; /* Isko bhi bottom boundary di */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  overflow-y: auto;
+  z-index: 3;
+  text-align: left;
+}
+
+
+/* ---------- PRODUCT CARD ---------- */
+
+/* Har individual product ka card */
+.product-card{
+  position: relative;
+  background: #18110d;
+  border: 1px solid #3f2b20;
+  border-radius: 13px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 240px; /* Har card ki fixed height taake ek doosre ke upar na aayein */
+  flex-shrink: 0;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, opacity .3s ease;
+}
+
+
+/* Product card hover effect */
+.product-card:hover{
+  /* Hover par card thora upar move hota hai */
+   transform: translateY(-6px);
+
+  /* Border orange ho jata hai */
+   border-color: #e0602a;
+
+  /* Card ke neeche soft shadow */
+   box-shadow: 0 18px 45px rgba(0,0,0,.35);
+}
+
+@media(max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    margin-top: 24vh !important;
+  }
+  .product-card {
+    height: 280px !important;
+  }
+}
+
+@media(max-width: 700px) {
+  .product-grid {
+    grid-template-columns: 1fr !important; /* Mobile par 1 column */
+    width: 92vw !important;
+    margin-top: 20vh !important;
+  }
+  .product-card {
+    height: 260px !important;
+  }
+}
+
+
+/* ---------- PRODUCT IMAGE ---------- */
+
+/* Product card ke top par image area */
+.product-img{
+  position: relative;
+
+  /* Image card ki total height ka portion leti hai */
+   height: 46%;
+   min-height: 0;
+
+  /* Image ko shrink hone se rokna */
+   flex-shrink: 0;
+
+  /* Background image ko cover mode mein rakhna */
+   background-size: cover;
+   background-position: center center;
+
+  /* Hover par image zoom smoothly hoti hai */
+   transition: transform .5s ease;
+}
+
+
+/* Card hover hone par product image slightly zoom hoti hai */
+.product-card:hover .product-img{
+  transform: scale(1.045);
+}
+
+
+/* Individual image framing */
+
+/* First product image ki default center position */
+.product-card:nth-child(1) .product-img{
+  background-position: center center;
+}
+
+
+/* Second product image ko thora neeche se frame karna */
+.product-card:nth-child(2) .product-img{
+  background-position: center 55%;
+}
+
+
+/* Third product image ki vertical framing */
+.product-card:nth-child(3) .product-img{
+  background-position: center 35%;
+}
+
+
+/* Fourth product image ki default center framing */
+.product-card:nth-child(4) .product-img{
+  background-position: center center;
+}
+
+
+/* Fifth product image ko thora neeche position karna */
+.product-card:nth-child(5) .product-img{
+  background-position: center 45%;
+}
+
+
+/* Sixth product image ki default center framing */
+.product-card:nth-child(6) .product-img{
+  background-position: center center;
+}
+
+
+/* Product image ke upar subtle dark overlay */
+.product-img:before{
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* Top aur bottom dono sides par halka dark gradient */
+   background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.2),
+    transparent 45%,
+    rgba(0,0,0,.25)
+  );
+}
+
+
+/* ---------- BADGE ---------- */
+
+/* Product image ke top-left mein badge */
+.product-badge{
+  position: absolute;
+  top: 11px;
+  left: 11px;
+
+  /* Badge ki inner spacing */
+   padding: 6px 9px;
+
+  /* Light transparent border */
+   border: 1px solid rgba(248,233,214,.38);
+   border-radius: 20px;
+
+  /* Dark glass-style background */
+   background: rgba(20,14,10,.62);
+   backdrop-filter: blur(7px);
+
+   color: #f8e9d6;
+
+  /* Badge text ki styling */
+   font-size: 7px;
+   font-weight: 800;
+   letter-spacing: .13em;
+
+  /* Badge image ke upar visible rahe */
+   z-index: 2;
+}
+/* ---------- SEASON LABEL ---------- */
+
+/* Product image ke top-right mein season label */
+.product-season{
+  position:absolute;
+  right:11px;
+  top:11px;
+
+  padding:5px 7px;
+
+  border-radius:4px;
+
+  /* Light cream label */
+  background:#f6e3c8;
+  color:#1b120b;
+
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:.08em;
+
+  /* Label image ke upar rahe */
+  z-index:2;
+}
+
+
+/* ---------- PRODUCT INFO ---------- */
+
+/* Product image ke neeche product details ka area */
+.product-info{
+  position:relative;
+
+  /* Remaining card space product information ko dena */
+  flex:1;
+  min-height:0;
+
+  /* Information area ki spacing */
+  padding:12px 15px 13px;
+
+  /* Text aur buttons ko vertical direction mein arrange karna */
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+
+/* Product number — clearer */
+
+/* Card ke top-right information area mein product number */
+.product-number{
+  position:absolute;
+
+  right:14px;
+  top:13px;
+
+  font-size:10px;
+
+  color:#b08d74;
+
+  letter-spacing:.12em;
+  font-weight:800;
+
+  /* Number ko content ke upar visible rakhna */
+  z-index:3;
+}
+
+
+/* Product ka main name/title */
+.product-info b{
+  font-size:18px;
+  line-height:1;
+  letter-spacing:-.03em;
+
+  /* Number ke liye right side par space */
+  padding-right:30px
+}
+
+
+/* Product category ka small uppercase text */
+.product-category{
+  color:#8f715b;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.13em;
+  text-transform:uppercase
+}
+
+
+/* Product ki short description */
+.product-info small{
+  color:#bba998;
+  font-size:9px;
+  line-height:1.3;
+
+  /* Description ko card ki width ke andar limited rakhna */
+  max-width:92%
+}
+
+
+/* Product info ke bottom mein price aur button */
+.product-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+
+  /* Bottom area ko automatically neeche push karna */
+  margin-top:auto;
+
+  padding-top:5px
+}
+
+
+/* Product price */
+.price{
+  color:#f3a15c;
+  font-size:13px;
+  font-weight:800
+}
+
+
+/* Product details/action button */
+.product-more{
+  border:1px solid #5b3d29;
+  background:#3a2417;
+  color:#f8e9d6;
+
+  border-radius:18px;
+  padding:7px 11px;
+
+  /* Button ki font styling */
+  font:700 8px Archivo;
+
+  letter-spacing:.04em;
+  cursor:pointer;
+
+  /* Hover effect smooth rakhna */
+  transition:.25s
+}
+
+
+/* Product button hover state */
+.product-more:hover{
+  background:#e0602a;
+  border-color:#e0602a;
+  color:#1b120b
+}
+
+
+/* =========================
+   SEASONAL GUIDE — NEW
+========================= */
+
+/* Seasonal guide section ka dark background
+   aur neeche se subtle brown glow */
+.season-section{
+  background:
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(92,57,34,.32),
+      transparent 48%
+    ),
+    #0b0908;
+
+  /* Seasonal content ko default center alignment dena */
+  text-align:center
+}
+
+
+/* Seasonal section ka top heading area */
+.season-head{
+  position:absolute;
+  top:5vh;
+  left:5vw;
+  right:5vw;
+
+  z-index:3;
+
+  /* Heading aur current season info ko side by side rakhna */
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+
+  gap:25px;
+
+  /* Heading ka text left aligned rahe */
+  text-align:left
+}
+
+
+/* Seasonal heading ke small label ki styling */
+.season-heading small{
+  display:block;
+  color:#f3a15c;
+
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.16em;
+
+  margin-bottom:7px
+}
+
+
+/* Seasonal section ka main heading */
+.season-heading h2{
+  /* Large responsive heading */
+  font-size:clamp(50px,6vw,110px);
+
+  line-height:.78;
+  font-weight:800;
+  letter-spacing:-.065em;
+  padding-top: 35px;
+  /* Heading ek line mein rahe */
+  white-space:nowrap
+}
+
+
+/* Seasonal heading ke neeche description */
+.season-heading p{
+  margin-top:12px;
+  max-width:360px;
+
+  color:#bba998;
+
+  font-size:11px;
+  line-height:1.4
+}
+
+
+/* Current season information ka side block */
+.season-current{
+  /* Orange left border se section ko highlight karna */
+  border-left:1px solid #e0602a;
+
+  padding-left:12px;
+  padding-bottom:3px;
+
+  text-align:left
+}
+
+
+/* Current season block ka small label */
+.season-current small{
+  display:block;
+  color:#8f715b;
+
+  font-size:8px;
+  letter-spacing:.14em;
+  font-weight:800;
+
+  margin-bottom:5px
+}
+
+
+/* Current season ka main name */
+.season-current strong{
+  display:block;
+  color:#f3a15c;
+
+  font-size:16px;
+  letter-spacing:.04em
+}
+
+
+/* Current season ka additional information */
+.season-current span{
+  color:#bba998;
+  font-size:8px;
+  font-weight:700
+}
+
+
+/* Seasonal cards ka main grid */
+.season-grid{
+  position:absolute;
+  left:5vw;
+  right:5vw;
+
+  top:30vh;
+  height:52vh;
+
+  /* Four seasonal cards ko ek row mein rakhna */
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+
+  gap:12px;
+
+  z-index:3;
+
+  /* Card content left aligned */
+  text-align:left
+}
+
+
+/* Individual seasonal card */
+.season-card{
+  position:relative;
+
+  border:1px solid #3f2b20;
+  border-radius:13px;
+
+  padding:15px;
+
+  background:#18110d;
+
+  /* Card ke andar content ko vertical arrange karna */
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
+
+  /* Hover effects smoothly apply karna */
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    background .3s ease
+}
+
+
+/* Seasonal card ka hover effect */
+.season-card:hover{
+  /* Card thora upar move hota hai */
+  transform:translateY(-7px);
+
+  /* Border orange ho jata hai */
+  border-color:#e0602a;
+
+  /* Background slightly lighter hota hai */
+  background:#1d140f
+}
+
+
+/* Seasonal card ke top par image */
+.season-img{
+  position:relative;
+
+  height:47%;
+  min-height:130px;
+
+  /* Image ko card edges tak extend karna */
+  margin:-15px -15px 14px;
+
+  background-size:cover;
+  background-position:center;
+
+  /* Hover par image smoothly zoom hoti hai */
+  transition:transform .5s ease
+}
+
+
+/* Card hover hone par seasonal image zoom */
+.season-card:hover .season-img{
+  transform:scale(1.04)
+}
+
+
+/* Seasonal image ke upar subtle dark gradient */
+.season-img:after{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.1),
+    rgba(0,0,0,.38)
+  )
+}
+
+
+/* Seasonal card ka number */
+.season-number{
+  position:absolute;
+  top:11px;
+  left:11px;
+
+  z-index:2;
+
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.1em;
+  color:#f8e9d6;
+
+  /* Number ke peeche translucent background */
+  background:rgba(20,14,10,.55);
+  backdrop-filter:blur(5px);
+
+  padding:5px 7px;
+  border-radius:4px
+}
+
+
+/* Seasonal card ka small category/tag */
+.season-card .season-tag{
+  display:inline-block;
+
+  color:#f3a15c;
+
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  font-weight:800;
+
+  margin-bottom:7px
+}
+
+
+/* Seasonal card ka main title */
+.season-card h3{
+  /* Title responsive size ke saath adjust hota hai */
+  font-size:clamp(22px,2vw,30px);
+
+  margin-bottom:7px;
+  line-height:1;
+  letter-spacing:-.04em
+}
+
+
+/* Seasonal card ki description */
+.season-card p{
+  font-size:10px;
+  line-height:1.45;
+
+  color:#bba998;
+
+  margin-bottom:10px
+}
+
+
+/* Card ke bottom mein explore information */
+.season-explore{
+  /* Content ko card ke bottom tak push karna */
+  margin-top:auto;
+
+  padding-top:10px;
+
+  /* Explore area ke upar separator */
+  border-top:1px solid rgba(248,233,214,.1);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  color:#8f715b;
+
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:.12em
+}
+
+
+/* Explore arrow/icon ko highlight karna */
+.season-explore span:last-child{
+  color:#f3a15c;
+  font-size:12px
+}
+
+
+/* Seasonal section ke bottom mein fresh items strip */
+.fresh-strip{
+  position:absolute;
+  left:5vw;
+  right:5vw;
+  bottom:6vh;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  /* Strip ke top par subtle divider */
+  border-top:1px solid rgba(248,233,214,.12);
+
+  padding-top:10px;
+
+  z-index:4;
+
+  text-align:left
+}
+
+
+/* Fresh strip ka label */
+.fresh-strip strong{
+  color:#8f715b;
+  font-size:8px;
+  letter-spacing:.13em;
+
+  /* Label ek line mein rahe */
+  white-space:nowrap
+}
+
+
+/* Fresh items ka container */
+.fresh-items{
+  display:flex;
+  gap:7px;
+
+  /* Space kam ho to items next line par aa sakte hain */
+  flex-wrap:wrap
+}
+
+
+/* Individual fresh item pill */
+.fresh-item{
+  border:1px solid #3f2b20;
+  border-radius:20px;
+
+  padding:5px 9px;
+
+  color:#d8c6b0;
+
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:.08em
+}
+
+
+/* First fresh item ko orange highlight dena */
+.fresh-item:first-child{
+  border-color:#e0602a;
+  color:#f3a15c
+}
+
+
+/*CREAM SECTION*/
+
+/* Cream section ke background image ko full screen cover karna */
+.fimg{
+  position:absolute;
+  inset:0;
+
+  background-size:cover;
+  background-position:center
+}
+
+
+/* Cream section ka main background aur text color */
+.cream{
+  background:#f6e3c8;
+  color:#1b120b
+}
+
+
+/* Cream section ke top center mein small label */
+.k{
+  position:absolute;
+  top:64px;
+  left:50%;
+
+  /* Text ko exact horizontal center mein rakhna */
+  transform:translateX(-50%);
+
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.06em
+}
+
+
+/* Cream section ka huge centered word */
+.word{
+  position:absolute;
+  left:0;
+  right:0;
+  top:12vh;
+
+  text-align:center;
+
+  /* Very large responsive typography */
+  font-size:min(15.5vw,260px);
+
+  font-weight:800;
+  letter-spacing:-.05em;
+  line-height:1
+}
+
+
+/* Main word ke neeche supporting text */
+.sp{
+  position:absolute;
+  top:calc(12vh + 15vw);
+
+  width:100%;
+
+  text-align:center;
+
+  font-size:clamp(13px,1.2vw,17px);
+
+  /* Text ko center area tak limit karna */
+  padding:0 30vw
+}
+
+
+/* Cream section ke bottom cards ka container */
+.cards{
+  position:absolute;
+  left:2vw;
+  right:2vw;
+  bottom:5vh;
+
+  height:32vh;
+
+  /* Cards ko three-column layout mein rakhna */
+  display:grid;
+  grid-template-columns:1fr 1.3fr 1.3fr;
+
+  gap:12px
+}
+
+
+/* Individual cream section card */
+.card{
+  border-radius:6px;
+
+  padding:18px;
+
+  position:relative;
+  overflow:hidden;
+
+  /* Card ka default background */
+  background:#e9cfa8 center/cover;
+
+  font-size:13px;
+  line-height:1.35;
+
+  /* Card content ko vertical direction mein arrange karna */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between
+}
+
+
+/* First card ka special green background */
+.card:first-child{
+  background:#3e5a32;
+  color:#f6e3c8
+}
+
+
+/* Card ka bold/main text */
+.card b{
+  font-size:clamp(15px,1.5vw,22px);
+  line-height:1.1
+}
+
+
+/* Card ke background mein large decorative letter */
+.card i{
+  position:absolute;
+
+  right:10px;
+  bottom:-24px;
+
+  /* Large decorative typography */
+  font:800 130px/1 Archivo,Arial;
+
+  /* Letter ko subtle rakhna */
+  opacity:.18
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+/* Modal ko full screen overlay ki tarah rakhna */
+.modal{
+  position:fixed;
+  inset:0;
+
+  /* Modal ko page ke baaki content ke upar rakhna */
+  z-index:30;
+
+  /* Dark transparent overlay */
+  background:rgba(0,0,0,.72);
+
+  /* Background content ko blur karna */
+  backdrop-filter:blur(10px);
+
+  /* Default mein modal hidden hai */
+  display:none;
+
+  /* Modal box ko center mein rakhna */
+  place-items:center;
+
+  padding:24px
+}
+
+
+/* Show class lagne par modal visible hota hai */
+.modal.show{
+  display:grid
+}
+
+
+/* Modal ka main content box */
+.modal-box{
+  width:min(760px,94vw);
+
+  background:#19120e;
+
+  border:1px solid #68442a;
+  border-radius:16px;
+
+  /* Image aur text ko two-column layout mein rakhna */
+  display:grid;
+  grid-template-columns:42% 58%;
+
+  /* Content rounded corners ke andar rahe */
+  overflow:hidden;
+
+  /* Modal ke neeche strong shadow */
+  box-shadow:0 24px 80px rgba(0,0,0,.45)
+}
+
+
+/* Modal mein product/image area */
+.modal-img{
+  min-height:360px;
+
+  /* Background image ko cover karna */
+  background:center/cover
+}
+
+
+/* Modal ke right side ka text/content */
+.modal-copy{
+  padding:28px;
+  position:relative
+}
+
+
+/* Modal ka main title */
+.modal-copy h2{
+  font-size:38px;
+  margin:12px 0 8px
+}
+
+
+/* Modal ka description */
+.modal-copy p{
+  color:#d8c6b0;
+  line-height:1.5
+}
+
+
+/* Modal mein price ko highlight karna */
+.modal-copy .modal-price{
+  font-size:24px;
+  color:#f3a15c;
+  font-weight:800;
+
+  margin:15px 0
+}
+
+
+/* Modal close button */
+.modal-close{
+  position:absolute;
+  right:16px;
+  top:12px;
+
+  background:none;
+  border:0;
+
+  color:#f8e9d6;
+
+  font-size:25px;
+  cursor:pointer
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+/* Contact section ka main content wrapper */
+.contact-wrap{
+  position:absolute;
+  left:8vw;
+  right:8vw;
+  top:24vh;
+
+  /* Contact text aur form ko two columns mein rakhna */
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:50px;
+
+  align-items:start
+}
+
+
+/* Contact heading */
+.contact-copy h2{
+  /* Heading responsive size ke saath adjust hoti hai */
+  font-size:clamp(40px,6vw,90px);
+
+  line-height:.9;
+  margin:15px 0
+}
+
+
+/* Contact section ka description */
+.contact-copy p{
+  max-width:430px;
+
+  color:#d8c6b0;
+  line-height:1.5
+}
+
+
+/* Contact form ka layout */
+.contact-form{
+  display:grid;
+
+  /* Form fields ke darmiyan spacing */
+  gap:10px
+}
+
+
+/* Contact form ke input aur textarea */
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+
+  padding:13px 14px;
+
+  border:1px solid #5a3b29;
+  border-radius:8px;
+
+  background:#201711;
+  color:#f8e9d6;
+
+  font:14px Archivo
+}
+
+
+/* Message textarea ki fixed height */
+.contact-form textarea{
+  height:125px;
+
+  /* User textarea ko resize nahi kar sakta */
+  resize:none
+}
+
+
+/* Contact form ka submit button */
+.contact-form button{
+  padding:13px;
+
+  border:0;
+  border-radius:8px;
+
+  background:#e0602a;
+  color:#1b120b;
+
+  font:800 12px Archivo;
+
+  cursor:pointer
+}
+
+
+/* =========================================================
+   CHAT PANEL
+   Chat box ko screen ke top-right side par show karta hai.
+========================================================= */
+
+.chat-panel{
+  position:fixed;
+  right:24px;
+  top:68px;
+  width:min(350px,90vw);
+  z-index:25;
+  background:#18110d;
+  border:1px solid #68442a;
+  border-radius:14px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  display:none;
+  overflow:hidden
+}
+
+/* Chat panel ko visible karne ke liye */
+.chat-panel.show{
+  display:block
+}
+
+/* Chat panel ka heading area */
+.chat-head{
+  padding:13px 15px;
+  background:#3a2417;
+  font-weight:800
+}
+
+/* Chat ke andar ka main content */
+.chat-body{
+  padding:15px;
+  font-size:13px;
+  color:#d8c6b0;
+  line-height:1.45
+}
+
+/* Chat input field */
+.chat-body input{
+  width:100%;
+  margin-top:12px;
+  padding:10px;
+  background:#211710;
+  border:1px solid #5a3b29;
+  color:#fff;
+  border-radius:7px
+}
+
+/* Chat ka reply text */
+.chat-reply{
+  margin-top:9px;
+  color:#f3a15c
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   Screen width 900px ya us se kam hone par
+   layout ko tablet/smaller screens ke liye adjust karta hai.
+========================================================= */
+
+@media(max-width:900px){
+
+  /* Header ki spacing kam karta hai */
+  header{
+    padding:10px 13px
+  }
+
+  /* Navigation items ke darmiyan gap */
+  nav{
+    gap:11px
+  }
+
+  /* Chat ke ilawa navigation pills hide karta hai */
+  .nav-actions .nav-pill:not(.chat-nav){
+    display:none
+  }
+
+
+  /* ---------------- PRODUCTS ---------------- */
+
+  /* Products heading ki vertical position */
+  .products-head{
+    top:6vh;
+  }
+
+  /* Products title ka responsive font size */
+  .products-title h2{
+    font-size:clamp(38px,7vw,62px);
+  }
+
+  /* Product filters/tools ki position aur spacing */
+  .product-tools{
+    top:22vh;
+    gap:18px;
+  }
+
+  /* Products ko 2 columns aur 3 rows mein arrange karta hai */
+  .product-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:repeat(3,minmax(0,1fr));
+
+    top:31vh;
+    bottom:4vh;
+
+    gap:12px;
+  }
+
+  /* Product image ki height aur positioning */
+  .product-img{
+    height:46%;
+    min-height:0;
+    background-size:cover;
+    background-position:center center;
+  }
+
+
+  /* ---------------- SEASON ---------------- */
+
+  /* Seasonal cards ko 2 columns mein rakhta hai */
+  .season-grid{
+    grid-template-columns:1fr 1fr;
+    height:54vh;
+    top:29vh
+  }
+
+  /* Season heading ki position */
+  .season-head{
+    top:6vh
+  }
+
+  /* Season heading ka responsive size */
+  .season-heading h2{
+    font-size:clamp(48px,8vw,76px)
+  }
+
+  /* Current season information ko hide karta hai */
+  .season-current{
+    display:none
+  }
+
+  /* Fresh strip ki bottom position */
+  .fresh-strip{
+    bottom:4vh
+  }
+
+
+  /* ---------------- MODAL ---------------- */
+
+  /* Modal ko single-column layout deta hai */
+  .modal-box{
+    grid-template-columns:1fr
+  }
+
+  /* Modal image ki minimum height */
+  .modal-img{
+    min-height:220px
+  }
+
+
+  /* ---------------- CONTACT ---------------- */
+
+  /* Contact section ko single column mein rakhta hai */
+  .contact-wrap{
+    grid-template-columns:1fr;
+    gap:20px
+  }
+
+}
+
+
+/*MOBILE RESPONSIVE
+   Screen width 700px ya us se kam hone par*/
+
+@media(max-width:700px){
+
+  /* Side section ki width aur position */
+  .side{
+    width:52vw;
+    top:52vh
+  }
+
+  /* Glass effect ko mobile par hide karta hai */
+  .glass{
+    display:none
+  }
+
+  /* First section heading ki position */
+  .s1 h2{
+    top:20vh
+  }
+
+  /* First section paragraph ki position aur width */
+  .s1 p{
+    width:60vw;
+    top:68vh
+  }
+
+
+  /* ---------------- PRODUCTS MOBILE ---------------- */
+
+  /* Products heading ko mobile margins deta hai */
+  .products-head{
+    left:4vw;
+    right:4vw;
+    top:6vh;
+  }
+
+  /* Mobile par product heading ka size */
+  .products-title h2{
+    font-size:clamp(34px,9vw,54px);
+  }
+
+  /* Product description mobile par hide */
+  .products-title p{
+    display:none
+  }
+
+  /* Product status mobile par hide */
+  .product-status{
+    display:none
+  }
+
+  /* Product tools ko vertical arrangement deta hai */
+  .product-tools{
+    left:4vw;
+    right:4vw;
+
+    top:23vh;
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+
+    gap:8px;
+
+    height:auto;
+    min-height:0;
+  }
+
+  /* Product count ka small font */
+  .product-count{
+    font-size:9px;
+  }
+
+  /* Product filters ko wrap hone deta hai */
+  .product-filters{
+    gap:4px;
+    flex-wrap:wrap;
+  }
+
+  /* Individual filter button ki mobile styling */
+  .product-filter{
+    padding:5px 8px;
+    font-size:7px
+  }
+
+  /* Product grid ki mobile position */
+  .product-grid{
+    top:31vh;
+    bottom:4vh;
+    gap:9px
+  }
+
+  /* Product image ki mobile height */
+  .product-img{
+    height:42%;
+    min-height:90px;
+    background-size:cover;
+    background-position:center center;
+  }
+
+  /* Product information area */
+  .product-info{
+    min-height:0;
+    padding:10px
+  }
+
+  /* Product number ki position */
+  .product-number{
+    right:10px;
+    top:10px;
+    font-size:9px;
+  }
+
+  /* Product name ka size */
+  .product-info b{
+    font-size:16px
+  }
+
+  /* Product secondary information ka size */
+  .product-info small{
+    font-size:9px
+  }
+
+  /* Product category ka size */
+  .product-category{
+    font-size:7px
+  }
+
+  /* More button ki mobile styling */
+  .product-more{
+    padding:6px 8px;
+    font-size:7px
+  }
+
+  /* Product price ka size */
+  .price{
+    font-size:11px
+  }
+
+
+  /* ---------------- SEASON MOBILE ---------------- */
+
+  /* Season heading ki mobile position */
+  .season-head{
+    left:4vw;
+    right:4vw;
+    top:6vh
+  }
+
+  /* Season heading ka responsive mobile size */
+  .season-heading h2{
+    font-size:clamp(43px,11vw,65px);
+    white-space:normal
+  }
+
+  /* Season description ki width aur font */
+  .season-heading p{
+    max-width:270px;
+    font-size:9px
+  }
+
+  /* Season cards ka mobile layout */
+  .season-grid{
+    left:4vw;
+    right:4vw;
+    top:31vh;
+    height:51vh;
+    gap:8px
+  }
+
+  /* Season card ke andar ki spacing */
+  .season-card{
+    padding:10px
+  }
+
+  /* Season image ko card ke edges ke qareeb rakhta hai */
+  .season-img{
+    margin:-10px -10px 9px;
+    height:38%;
+    min-height:85px
+  }
+
+  /* Season card heading */
+  .season-card h3{
+    font-size:18px
+  }
+
+  /* Season card description */
+  .season-card p{
+    font-size:8px
+  }
+
+  /* Season tag */
+  .season-card .season-tag{
+    font-size:7px
+  }
+
+  /* Explore text */
+  .season-explore{
+    font-size:6px;
+    padding-top:7px
+  }
+
+  /* Fresh strip ki mobile position */
+  .fresh-strip{
+    left:4vw;
+    right:4vw;
+    bottom:3vh;
+    gap:8px
+  }
+
+  /* Fresh strip heading */
+  .fresh-strip strong{
+    font-size:6px
+  }
+
+  /* Fresh strip items */
+  .fresh-item{
+    font-size:6px;
+    padding:4px 6px
+  }
+
+
+  /* ---------------- OTHER MOBILE ELEMENTS ---------------- */
+
+  /* Detail section ko single column mein rakhta hai */
+  #det{
+    grid-template-columns:1fr;
+    top:26vh
+  }
+
+  /* Detail media/image area ki height */
+  .dm{
+    height:22vh
+  }
+
+  /* Cards ko single column mein rakhta hai */
+  .cards{
+    grid-template-columns:1fr;
+    height:52vh
+  }
+
+  /* Small padding for content */
+  .sp{
+    padding:0 8vw
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE SCREENS
+   Screen width 600px ya us se kam hone par
+========================================================= */
+
+@media(max-width:600px){
+
+  /* Navigation ke 4th item ke baad wale links hide */
+  nav a:nth-child(n+4){
+    display:none
+  }
+
+
+  /* ---------------- PRODUCTS ---------------- */
+
+  /* Products ko 2 columns aur 3 rows mein rakhta hai */
+  .product-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:repeat(3,minmax(0,1fr));
+
+    top:31vh;
+  }
+
+  /* Product cards ko available space use karne deta hai */
+  .product-card{
+    min-height:0
+  }
+
+  /* Product season information hide */
+  .product-season{
+    display:none
+  }
+
+  /* Product image ki fixed mobile height */
+  .product-img{
+    height:80px;
+    min-height:80px;
+  }
+
+  /* Product small text hide */
+  .product-info small{
+    display:none
+  }
+
+  /* Product bottom content ko neeche push karta hai */
+  .product-bottom{
+    margin-top:auto
+  }
+
+
+  /* ---------------- SEASON ---------------- */
+
+  /* Season cards ko 2 columns mein rakhta hai */
+  .season-grid{
+    grid-template-columns:1fr 1fr;
+    overflow:visible
+  }
+
+  /* Pehle 2 cards ke ilawa baaki hide */
+  .season-card:nth-child(n+3){
+    display:none
+  }
+
+  /* Season card image ki fixed height */
+  .season-card .season-img{
+    height:70px
+  }
+
+
+  /* ---------------- CONTACT ---------------- */
+
+  /* Contact section ki position */
+  .contact-wrap{
+    top:20vh
+  }
+
+  /* Contact heading ka size */
+  .contact-copy h2{
+    font-size:52px
+  }
+
+}
+
+
+/*EXTRA MOBILE HEIGHT FIX
+   Chhoti height wale mobile screens ke liye
+   vertical spacing ko adjust karta hai.*/
+
+@media(max-width:600px) and (max-height:750px){
+
+  /* Products heading ko thora upar karta hai */
+  .products-head{
+    top:5vh;
+  }
+
+  /* Products title ka size adjust */
+  .products-title h2{
+    font-size:clamp(32px,8.5vw,50px);
+  }
+
+  /* Product tools ko upar move karta hai */
+  .product-tools{
+    top:20.5vh;
+  }
+
+  /* Product grid ko upar move karta hai */
+  .product-grid{
+    top:29vh;
+  }
+
+
+  /* Season heading ko upar move karta hai */
+  .season-head{
+    top:5vh
+  }
+
+  /* Season cards ko upar move karta hai */
+  .season-grid{
+    top:28vh
+  }
+
+  /* Fresh strip ko chhoti-height screens par hide */
+  .fresh-strip{
+    display:none
+  }
+
+}
+
+
+/* FRESHFIND INTERACTION LAYER
+   Interactive buttons, overlays, market section,
+   harvest drawer aur related UI elements.*/
+
+/* Field Notes aur Harvest navigation buttons */
+.field-notes-nav,.harvest-nav{
+  border-color:rgba(248,233,214,.42);
+  background:rgba(255,255,255,.06)
+}
+
+/* Harvest navigation ka accent color */
+.harvest-nav{
+  color:#f3a15c
+}
+
+/* Harvest button click animation */
+.harvest-pop{
+  animation:harvestPop .45s ease
+}
+
+/* Harvest pop animation ke beech mein halka zoom */
+@keyframes harvestPop{
+  50%{
+    transform:scale(1.1)
+  }
+  100%{
+    transform:scale(1)
+  }
+}
+
+
+/* OVERLAY WINDOWS
+   Market, market detail, notes aur checkout overlays. */
+
+.market-overlay,.market-detail-overlay,.notes-overlay,.checkout-overlay{
+  position:fixed;
+  inset:0;
+  z-index:40;
+  display:grid;
+  place-items:center;
+  background:rgba(5,5,4,.76);
+  backdrop-filter:blur(10px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:.3s;
+  padding:24px
+}
+
+/* Jab overlay show class receive kare to visible hota hai */
+.market-overlay.show,.market-detail-overlay.show,.notes-overlay.show,.checkout-overlay.show{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto
+}
+
+
+/*MARKET / NOTES / CHECKOUT BOX*/
+
+.market-box,.market-detail-box,.notes-box,.checkout-box{
+  width:min(980px,94vw);
+  max-height:88vh;
+  overflow:auto;
+  background:#17110d;
+  border:1px solid #5b3d29;
+  border-radius:18px;
+  box-shadow:0 30px 100px rgba(0,0,0,.5);
+  padding:28px;
+  color:#f8e9d6
+}
+
+/* Market header ko left/right sections mein arrange karta hai */
+.market-top{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  border-bottom:1px solid rgba(248,233,214,.12);
+  padding-bottom:20px
+}
+
+/* Small market heading / label */
+.market-kicker{
+  display:block;
+  color:#f3a15c;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.16em
+}
+
+/* Main headings for market, notes aur checkout */
+.market-top h2,.notes-box h2,.checkout-box h2{
+  font-size:clamp(34px,5vw,62px);
+  line-height:.9;
+  margin:8px 0 12px;
+  letter-spacing:-.06em
+}
+
+/* Market aur notes ki descriptive text */
+.market-top p,.notes-box>p{
+  max-width:610px;
+  color:#bba998;
+  font-size:12px;
+  line-height:1.5
+}
+
+/* Market close button */
+.market-close{
+  width:36px;
+  height:36px;
+  border:1px solid #5b3d29;
+  background:#24170f;
+  color:#f8e9d6;
+  border-radius:50%;
+  font-size:22px;
+  cursor:pointer;
+  flex-shrink:0
+}
+
+
+/*MARKET CONTROLS
+   Search, filters aur saved markets buttons.*/
+
+.market-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr auto auto;
+  gap:9px;
+  padding:18px 0
+}
+
+/* Market controls ki common styling */
+.market-select,.market-search,.saved-markets-btn{
+  min-height:40px;
+  border:1px solid #4d3424;
+  border-radius:22px;
+  background:#0f0b08;
+  color:#f8e9d6;
+  padding:0 13px;
+  font:700 9px Archivo;
+  letter-spacing:.05em
+}
+
+/* Market search button ka highlight style */
+.market-search{
+  background:#e0602a;
+  color:#1b120b;
+  border-color:#e0602a
+}
+
+/* Saved markets button */
+.saved-markets-btn{
+  background:#2b1b12
+}
+
+
+/*MARKET RESULTS*/
+
+/* Market cards ko 2 columns mein arrange karta hai */
+.market-results{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px
+}
+
+/* Individual market card */
+.market-card{
+  background:#20150f;
+  border:1px solid #3f2b20;
+  border-radius:13px;
+  padding:16px
+}
+
+/* Market card ke top content ko horizontally arrange karta hai */
+.market-card-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px
+}
+
+/* Market category / label */
+.market-card-head>div>span{
+  font-size:7px;
+  color:#f3a15c;
+  letter-spacing:.13em;
+  font-weight:800;
+  text-transform:uppercase
+}
+
+/* Market card ka title */
+.market-card h3{
+  font-size:20px;
+  margin-top:5px
+}
+
+/* Market save button */
+.market-save{
+  border:0;
+  background:transparent;
+  color:#f3a15c;
+  font-size:22px;
+  cursor:pointer
+}
+
+/* Market ki basic information */
+.market-info{
+  color:#bba998;
+  font-size:10px;
+  line-height:1.5;
+  margin:9px 0
+}
+
+
+/*PRODUCE TAGS*/
+
+/* Produce tags ko flexible row mein rakhta hai */
+.market-produce,.detail-produce,.season-modal-products{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px
+}
+
+/* Individual produce tags */
+.market-produce span,.detail-produce span,.season-modal-products span{
+  padding:5px 7px;
+  border-radius:12px;
+  background:#332117;
+  color:#e4cdb6;
+  font-size:7px;
+  font-weight:800
+}
+
+
+/*ACTION BUTTONS*/
+
+.market-actions,.detail-buttons,.modal-actions,.season-modal-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:14px
+}
+
+/* Action buttons ki common styling */
+.market-actions button,.detail-buttons button,.modal-actions button,.season-modal-actions button{
+  border:1px solid #5b3d29;
+  background:#2d1d14;
+  color:#f8e9d6;
+  border-radius:18px;
+  padding:8px 11px;
+  font:800 8px Archivo;
+  cursor:pointer
+}
+
+/* First action button ko primary orange style deta hai */
+.market-actions button:first-child,.detail-buttons button:first-child,.harvest-add,.season-modal-actions button:first-child{
+  background:#e0602a;
+  color:#1b120b;
+  border-color:#e0602a
+}
+
+
+/*EMPTY STATES
+  Jab market ya harvest list mein koi item na ho.*/
+
+.market-empty,.harvest-empty{
+  padding:28px;
+  color:#a98f7b;
+  font-size:12px;
+  text-align:center;
+  border:1px dashed #4d3424;
+  border-radius:12px;
+  grid-column:1/-1
+}
+
+
+/*MARKET DETAIL BOX*/
+
+.market-detail-box{
+  position:relative;
+  max-width:820px
+}
+
+/* Detail close button ki position */
+.detail-close{
+  position:absolute;
+  right:18px;
+  top:18px
+}
+
+/* Market area / category label */
+.market-detail-area{
+  display:inline-block;
+  color:#f3a15c;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.14em;
+  margin-bottom:8px
+}
+
+/* Market detail ka main heading */
+.market-detail-box h2{
+  font-size:clamp(35px,5vw,64px);
+  line-height:.9;
+  letter-spacing:-.06em;
+  max-width:700px
+}
+
+/* Market location information */
+.market-detail-location{
+  color:#bba998;
+  margin:12px 0 18px;
+  font-size:12px
+}
+
+
+/*MARKET DETAIL GRID*/
+
+/* Detail information ko 4 columns mein arrange karta hai */
+.detail-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px
+}
+
+/* Individual detail information box */
+.detail-box{
+  padding:13px;
+  border:1px solid #3f2b20;
+  border-radius:11px;
+  background:#20150f
+}
+
+/* Detail box ka small label */
+.detail-box small{
+  display:block;
+  color:#8f715b;
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:7px
+}
+
+/* Detail box ka main information */
+.detail-box strong{
+  font-size:11px;
+  line-height:1.3
+}
+
+/* Detail section ke darmiyan spacing */
+.detail-section{
+  margin-top:20px
+}
+
+/* Detail section heading */
+.detail-section h4{
+  font-size:9px;
+  letter-spacing:.13em;
+  color:#f3a15c;
+  margin-bottom:8px
+}
+
+
+/*HARVEST DRAWER
+   Right side se slide hone wala harvest/cart panel.*/
+
+.harvest-drawer{
+  position:fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  width:min(430px,94vw);
+  z-index:55;
+  background:#17110d;
+  border-left:1px solid #5b3d29;
+  padding:24px;
+  transform:translateX(105%);
+  transition:.4s cubic-bezier(.76,0,.18,1);
+  display:flex;
+  flex-direction:column;
+  box-shadow:-30px 0 80px rgba(0,0,0,.35)
+}
+
+/* Drawer ko screen ke andar slide karta hai */
+.harvest-drawer.show{
+  transform:translateX(0)
+}
+
+/* Drawer ke peeche dark backdrop */
+.drawer-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:54;
+  background:rgba(0,0,0,.5);
+  opacity:0;
+  visibility:hidden;
+  transition:.3s
+}
+
+/* Backdrop ko visible karta hai */
+.drawer-backdrop.show{
+  opacity:1;
+  visibility:visible
+}
+
+
+/*HARVEST DRAWER HEADER*/
+
+.drawer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  border-bottom:1px solid #3f2b20;
+  padding-bottom:18px
+}
+
+/* Drawer ka small label */
+.drawer-head small{
+  color:#f3a15c;
+  font-size:8px;
+  letter-spacing:.14em;
+  font-weight:800
+}
+
+/* Drawer heading */
+.drawer-head h2{
+  font-size:36px;
+  line-height:.9;
+  margin-top:7px
+}
+
+/* Drawer close button */
+.drawer-close{
+  border:0;
+  background:transparent;
+  color:#f8e9d6;
+  font-size:28px;
+  cursor:pointer
+}
+
+
+/*HARVEST ITEMS*/
+
+/* Items area ko available vertical space deta hai */
+.harvest-items{
+  flex:1;
+  overflow:auto;
+  padding:14px 0
+}
+
+/* Individual harvest item */
+.harvest-item{
+  display:flex;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(248,233,214,.08)
+}
+
+/* Harvest item ka thumbnail */
+.harvest-thumb{
+  width:70px;
+  height:70px;
+  border-radius:10px;
+  background-size:cover;
+  background-position:center;
+  flex-shrink:0
+}
+
+/* Harvest item ka text area */
+.harvest-copy{
+  flex:1
+}
+
+/* Harvest item ka name */
+.harvest-copy strong{
+  display:block;
+  font-size:16px
+}
+
+/* Harvest item ki secondary information */
+.harvest-copy small{
+  display:block;
+  color:#9c806b;
+  font-size:8px;
+  margin:4px 0 9px
+}
+
+
+/*HARVEST QUANTITY CONTROLS*/
+
+.harvest-qty{
+  display:flex;
+  align-items:center;
+  gap:6px
+}
+
+/* Quantity plus/minus buttons */
+.harvest-qty button{
+  border:1px solid #4d3424;
+  background:#2a1a11;
+  color:#f8e9d6;
+  border-radius:14px;
+  min-width:25px;
+  height:25px;
+  cursor:pointer;
+  font-weight:800
+}
+
+/* Quantity number */
+.harvest-qty b{
+  font-size:10px;
+  min-width:15px;
+  text-align:center
+}
+
+/* Remove item button */
+.harvest-qty .remove-harvest{
+  margin-left:auto;
+  width:auto;
+  padding:0 8px;
+  font-size:7px;
+  color:#f3a15c
+}
+
+
+/*HARVEST DRAWER FOOTER*/
+
+.harvest-footer{
+  border-top:1px solid #3f2b20;
+  padding-top:15px
+}
+
+/* Total row ko left/right align karta hai */
+.harvest-total{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px
+}
+
+/* Total ka small label */
+.harvest-total span{
+  font-size:8px;
+  color:#8f715b;
+  letter-spacing:.12em
+}
+
+/* Total amount */
+.harvest-total strong{
+  font-size:22px;
+  color:#f3a15c
+}
+
+
+/*HARVEST / CHECKOUT BUTTONS*/
+
+.source-btn,.checkout-btn{
+  width:100%;
+  padding:11px;
+  border-radius:20px;
+  font:800 9px Archivo;
+  cursor:pointer;
+  margin-top:7px
+}
+
+/* Source button */
+.source-btn{
+  background:#2a1a11;
+  border:1px solid #4d3424;
+  color:#f8e9d6
+}
+
+/* Checkout button */
+.checkout-btn{
+  background:#e0602a;
+  border:1px solid #e0602a;
+  color:#1b120b
+}
+
+
+/*HARVEST FLY ANIMATION
+   Item ko cart/harvest area ki taraf move karne wali
+   floating image styling.*/
+
+.harvest-fly{
+  position:fixed;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background-size:cover;
+  background-position:center;
+  z-index:100;
+  pointer-events:none;
+  transition:left .65s cubic-bezier(.2,.8,.2,1),top .65s cubic-bezier(.2,.8,.2,1),transform .65s,opacity .65s;
+  box-shadow:0 10px 30px rgba(0,0,0,.4)
+}
+
+/*NOTES & CHECKOUT BOX
+   Notes aur checkout panels ki basic size aur positioning.*/
+
+.notes-box,.checkout-box{
+  max-width:720px;
+  position:relative
+}
+
+
+/*FIELD NOTES
+   Notes ko 2-column grid mein show karta hai.*/
+
+.notes-items{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:18px
+}
+
+/* Individual note button/card */
+.note-item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid #3f2b20;
+  background:#21160f;
+  color:#f8e9d6;
+  border-radius:11px;
+  padding:13px;
+  cursor:pointer;
+  text-align:left
+}
+
+/* Note ka main text */
+.note-item span{
+  font-weight:800
+}
+
+/* Note ka small highlighted text */
+.note-item small{
+  color:#f3a15c
+}
+
+
+/*CHECKOUT FORM
+   Customer details enter karne ke liye form layout.*/
+
+.checkout-form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:18px
+}
+
+/* Checkout form ke input aur textarea */
+.checkout-form input,.checkout-form textarea{
+  border:1px solid #4d3424;
+  background:#0f0b08;
+  color:#f8e9d6;
+  border-radius:10px;
+  padding:12px;
+  font:500 11px Archivo;
+  outline:none
+}
+
+/* Address/message textarea ko full width deta hai */
+.checkout-form textarea{
+  min-height:80px;
+  grid-column:1/-1;
+  resize:vertical
+}
+
+
+/*CHECKOUT SUMMARY
+   Order ki summary aur total information.*/
+
+.checkout-summary{
+  grid-column:1/-1;
+  border:1px solid #3f2b20;
+  border-radius:10px;
+  padding:12px;
+  background:#21160f
+}
+
+/* Summary ke andar har information row */
+.checkout-summary div{
+  display:flex;
+  justify-content:space-between;
+  padding:4px 0;
+  color:#c5ad98;
+  font-size:10px
+}
+
+/* Summary ka highlighted amount/text */
+.checkout-summary b{
+  color:#f3a15c
+}
+
+
+/* Checkout submit button */
+.checkout-submit{
+  grid-column:1/-1;
+  padding:12px;
+  border:0;
+  border-radius:22px;
+  background:#e0602a;
+  color:#1b120b;
+  font:800 9px Archivo;
+  cursor:pointer
+}
+
+/* Checkout ke baad message show karne ki jagah */
+.checkout-message{
+  grid-column:1/-1;
+  color:#f3a15c;
+  font-size:10px;
+  text-align:center;
+  min-height:16px
+}
+
+
+/*PRODUCT MODAL
+   Product ki detailed information wale popup ki width.*/
+
+.product-modal-box{
+  max-width:850px
+}
+
+/* Product ki category/meta information */
+.modal-meta{
+  margin-top:12px;
+  color:#8f715b;
+  font-size:8px;
+  letter-spacing:.08em;
+  text-transform:uppercase
+}
+
+
+/*PRODUCT QUANTITY
+   Product quantity increase/decrease karne ka area.*/
+
+.quantity-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:15px;
+  border-top:1px solid rgba(248,233,214,.1);
+  padding-top:13px
+}
+
+/* Quantity section ka label */
+.quantity-row>span{
+  font-size:8px;
+  color:#8f715b;
+  letter-spacing:.1em;
+  font-weight:800
+}
+
+/* Quantity buttons aur number ko ek row mein rakhta hai */
+.qty{
+  display:flex;
+  align-items:center;
+  gap:9px
+}
+
+/* Plus aur minus quantity buttons */
+.qty button{
+  width:30px;
+  height:30px;
+  border:1px solid #5b3d29;
+  background:#2d1d14;
+  color:#f8e9d6;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px
+}
+
+/* Quantity number */
+.qty strong{
+  min-width:20px;
+  text-align:center
+}
+
+
+/* Product kis market mein available hai uska button */
+.where-market{
+  margin-top:9px;
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#f3a15c;
+  text-align:left;
+  padding:5px 0;
+  font:800 8px Archivo;
+  letter-spacing:.1em;
+  cursor:pointer
+}
+
+
+/*SEASON MODAL
+   Season ki detailed information ka full-screen popup.*/
+
+.season-modal{
+  position:fixed;
+  inset:0;
+  z-index:48;
+  display:grid;
+  place-items:center;
+  background:rgba(5,5,4,.76);
+  backdrop-filter:blur(10px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:.3s;
+  padding:24px
+}
+
+/* Show class lagne par season modal visible hota hai */
+.season-modal.show{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto
+}
+
+
+/*SEASON MODAL BOX
+   Image aur information ko 2-column layout mein rakhta hai.*/
+
+.season-modal-box{
+  position:relative;
+  width:min(920px,94vw);
+  max-height:88vh;
+  overflow:auto;
+  background:#17110d;
+  border:1px solid #5b3d29;
+  border-radius:18px;
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  box-shadow:0 30px 100px rgba(0,0,0,.5)
+}
+
+/* Season modal ki main image */
+.season-modal-img{
+  min-height:430px;
+  background-size:cover;
+  background-position:center
+}
+
+
+/* Season modal ka text/content area */
+.season-modal-copy{
+  padding:30px
+}
+
+/* Season modal ka main heading */
+.season-modal-copy h2{
+  font-size:clamp(45px,6vw,80px);
+  line-height:.8;
+  letter-spacing:-.07em;
+  margin:9px 0
+}
+
+/* Season modal ka small category/label */
+.season-modal-copy>small{
+  color:#f3a15c;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.13em
+}
+
+/* Season modal ki description */
+.season-modal-copy>p{
+  color:#bba998;
+  font-size:12px;
+  line-height:1.5;
+  margin:18px 0
+}
+
+/* Season modal mein section heading */
+.season-modal-copy h4{
+  font-size:8px;
+  color:#8f715b;
+  letter-spacing:.13em;
+  margin-bottom:8px
+}
+
+/* Season modal ke action buttons equal space lete hain */
+.season-modal-actions button{
+  flex:1;
+  min-width:130px
+}
+
+/* Season modal ka close button top-right par rakhta hai */
+.season-modal-box>.market-close{
+  position:absolute;
+  right:18px;
+  top:18px;
+  z-index:2
+}
+
+
+/*TABLET RESPONSIVE
+   850px ya us se chhoti screen ke liye adjustments.*/
+
+@media(max-width:850px){
+
+  /* Navigation ke darmiyan gap */
+  nav{
+    gap:11px
+  }
+
+  /* Navigation action buttons ke darmiyan gap */
+  .nav-actions{
+    gap:5px
+  }
+
+  /* Navigation pill buttons ka compact size */
+  .nav-pill{
+    padding:7px 8px;
+    font-size:8px
+  }
+
+  /* Market controls aur checkout form ko 2 columns mein rakhta hai */
+  .market-controls,.checkout-form{
+    grid-template-columns:1fr 1fr
+  }
+
+  /* Market cards ko single column mein arrange karta hai */
+  .market-results{
+    grid-template-columns:1fr
+  }
+
+  /* Detail information ko 2 columns mein rakhta hai */
+  .detail-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  /* Season modal ko single-column layout deta hai */
+  .season-modal-box{
+    grid-template-columns:1fr
+  }
+
+  /* Mobile/tablet par season image ki height kam karta hai */
+  .season-modal-img{
+    min-height:240px
+  }
+
+  /* Season modal content ki padding kam karta hai */
+  .season-modal-copy{
+    padding:22px
+  }
+
+  /* Notes ko single column mein arrange karta hai */
+  .notes-items{
+    grid-template-columns:1fr
+  }
+
+}
+
+
+/*SMALL MOBILE RESPONSIVE
+   620px ya us se chhoti screens ke liye.*/
+
+@media(max-width:620px){
+
+  /* Mobile header ki spacing */
+  header{
+    padding:10px 12px
+  }
+
+  /* Brand ka text hide karta hai, logo/mark visible rehta hai */
+  .brandmark span{
+    display:none
+  }
+
+  /* Mobile navigation ko horizontally scrollable banata hai */
+  nav{
+    overflow:auto;
+    justify-content:flex-start;
+    gap:12px
+  }
+
+  /* Mobile par chat aur music navigation buttons hide */
+  .nav-actions .chat-nav,.nav-actions .music-nav{
+    display:none
+  }
+
+  /* Field Notes button ka text hide */
+  .field-notes-nav{
+    font-size:0
+  }
+
+  /* Field Notes ka first character/icon visible rakhta hai */
+  .field-notes-nav:first-letter{
+    font-size:14px
+  }
+
+  /* Harvest navigation ka compact font */
+  .harvest-nav{
+    font-size:8px
+  }
+
+
+  /* ---------------- MOBILE OVERLAYS ---------------- */
+
+  /* Small screens par overlays ki outer spacing */
+  .market-overlay,.market-detail-overlay,.notes-overlay,.checkout-overlay,.season-modal{
+    padding:10px
+  }
+
+  /* Popup boxes ki padding kam karta hai */
+  .market-box,.market-detail-box,.notes-box,.checkout-box{
+    padding:18px
+  }
+
+
+  /* ---------------- MOBILE FORMS ---------------- */
+
+  /* Market controls aur checkout form ko single column mein rakhta hai */
+  .market-controls,.checkout-form{
+    grid-template-columns:1fr
+  }
+
+  /* Full-width checkout elements ki grid setting reset */
+  .checkout-form textarea,.checkout-summary,.checkout-submit,.checkout-message{
+    grid-column:auto
+  }
+
+
+  /* Detail information ko single column mein arrange karta hai */
+  .detail-grid{
+    grid-template-columns:1fr
+  }
+
+  /* Season modal buttons ko 2-column grid mein rakhta hai */
+  .season-modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr
+  }
+
+
+  /* ---------------- MOBILE PRODUCTS ---------------- */
+
+  /* Mobile par product title ka size */
+  .products-title h2{
+    font-size:42px
+  }
+
+  /* Products ko 2 columns mein rakhta hai */
+  .product-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+
+  /* ---------------- MOBILE SEASON ---------------- */
+
+  /* Season cards ko 2 columns mein rakhta hai aur scrolling allow karta hai */
+  .season-grid{
+    grid-template-columns:1fr 1fr;
+    overflow:auto
+  }
+
+}
+
+/* =========================
+   NAVBAR LOGO
+========================= */
+
+.brandmark {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 100%;
+  width: auto;
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+  overflow: hidden;
+}
+
+/* Logo image styling */
+
+.brand-logo {
+  display: block;
+
+  width: 90px;
+  height: 55px;
+
+  max-width: 100%;
+
+  object-fit: contain;
+  object-position: left center;
+
+  transition: transform 0.3s ease;
+}
+
+/* Logo hover effect */
+
+.brandmark:hover .brand-logo {
+  transform: scale(1.04);
+}
+
+/* Responsive logo for mobile screens */
+
+@media (max-width: 768px) {
+
+  .brand-logo {
+    width: 72px;
+    height: 30px;
+  }
+
+}
+
+
+/* =========================
+   HEADER — SOLID GREEN
+========================= */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  padding: 13px 24px;
+
+  /* Solid background matching FreshFind */
+  background: rgb(63, 80, 48);
+
+  /* Remove all blur effects */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  /* Subtle border matching the website */
+  border-bottom: 1px solid rgba(248, 233, 214, 0.18);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+/* ==== */
+
+
+.products-title h2{
+  margin: 0;
+  padding-bottom: 25px;
+  font-size: clamp(42px,4.6vw,68px);
+  line-height: .9;
+  font-weight: 800;
+  letter-spacing: -.03em;
+ 
+}
+
