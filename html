@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UFF — FreshFind</title> <!-- Ye website ka favicon hai jo browser tab mein nazar aata hai -->
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233f5030'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial' font-size='23' font-weight='800' fill='%23fbe9d2'%3EUFF%3C/text%3E%3C/svg%3E">
+  <!-- Ye website mein Archivo font use karne ke liye hai -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap"
+    rel="stylesheet"> <!-- Website ki sari styling CSS file se load hoti hai -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body> <!-- Page load hone ke waqt ye loading screen show hoti hai -->
+  <div id="loader">
+    <svg viewBox="-120 -120 240 240" width="260" height="260">
+
+      <!-- Ye loader ka main green circle hai -->
+      <circle r="70" fill="none" stroke="#4f683d" stroke-width="26" />
+
+      <!-- Ye part rotate hokar loading ka effect deta hai -->
+      <g class="loader-sweep">
+
+        <circle r="70" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="26" stroke-linecap="round"
+          stroke-dasharray="70 370" />
+
+      </g>
+
+      <!-- Ye outer circle ki decorative detail hai -->
+      <circle r="83" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-dasharray="2 3" />
+
+      <!-- Ye inner circle ki decorative detail hai -->
+      <circle r="57" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1" stroke-dasharray="2 3" />
+
+    </svg>
+
+  </div> <!-- Website ka main header aur navigation -->
+  <header>
+    <!-- Ye website ka logo aur brand name hai -->
+    <!-- <a class="brandmark" id="logo" href="#0" aria-label="UFF FreshFind">
+      <strong>UFF</strong>
+
+    </a> -->
+
+    <a class="brandmark" id="logo" href="#0" aria-label="UFF FreshFind">
+
+  <img
+    src="images/UFF-logo.png"
+    alt="UFF FreshFind Logo"
+    class="brand-logo"
+  >
+
+</a>
+
+    <!-- Navigation links JavaScript ke through yahan add honge -->
+    <nav id="nav"></nav>
+
+    <!-- Header ke right side par available buttons -->
+    <div class="nav-actions">
+
+      <!-- Field notes section ko open karne wala button -->
+      <button class="nav-pill field-notes-nav" id="fieldNotes">
+        FIELD NOTES ♡
+      </button>
+
+      <!-- Harvest section aur uska count show karta hai -->
+      <button class="nav-pill harvest-nav" id="harvestToggle">
+        HARVEST · <span id="harvestCount">00</span>
+      </button>
+
+      <!-- Chatbot open karne wala button -->
+      <button class="nav-pill chat-nav" id="chatToggle">
+        CHATBOT
+      </button>
+
+      <!-- Background music ko on/off karne wala button -->
+      <button class="nav-pill music-nav" id="music">
+
+        <!-- Ye choti bars music animation ke liye hain -->
+        <span class="bars">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+
+        <span id="musicText">Music On</span>
+      </button>
+
+    </div>
+
+  </header> <!-- Ye chatbot ka main panel hai -->
+  <div class="chat-panel" id="chatPanel">
+    <!-- Chatbot ka heading -->
+    <div class="chat-head">
+      FreshFind Assistant
+    </div>
+
+    <div class="chat-body">
+
+      <!-- Yahan user markets, areas, produce aur timings ke bare mein pooch sakta hai -->
+      Ask about markets, areas, produce, timings, seasons or your harvest.
+
+      <!-- User apna question yahan type karega -->
+      <input id="chatInput" placeholder="Try: Find a market in Gulshan">
+
+      <!-- Chatbot ka response is section mein show hoga -->
+      <div class="chat-reply" id="chatReply">
+        Hi! I can help you explore FreshFind.
+      </div>
+
+    </div>
+
+  </div> <!-- Website ka main content JavaScript ke through yahan load hota hai -->
+  <main id="stage"></main> <!-- Ye canvas Three.js ke visual effects ke liye use hota hai -->
+
+  <canvas id="gl"></canvas>
+
+  <!-- Scrolling related functionality ke liye container -->
+  <div id="scroller"></div> <!-- Three.js library ko load kiya ja raha hai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Website ki main JavaScript file -->
+  <script src="app.js"></script>
+</body>
+
+</html>
