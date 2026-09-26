@@ -1,0 +1,430 @@
+{
+  "brand": "UFF",
+  "music": "",
+  "tag": "Made for markets. Built for neighbours.",
+  "nav": [
+    {
+      "t": "Home",
+      "s": 0
+    },
+    {
+      "t": "Shop Now",
+      "s": 7,
+      "action": "shop"
+    },
+    {
+      "t": "Products",
+      "s": 7
+    },
+    {
+      "t": "Contact Us",
+      "s": 9
+    }
+  ],
+  "hero": {
+    "title": "FRESHFIND",
+    "tab": "FRESH-1 MODEL",
+    "card": [
+      "MADE BY RESIDENTS,",
+      "FOR RESIDENTS."
+    ],
+    "cardSub": "The friendliest way to find a fresh basket nearby.",
+    "p": "Find farmers markets close to you, check who is open right now, and plan the week's shopping before the first stall opens."
+  },
+  "intro": {
+    "left": [
+      "MORE THAN",
+      "A MARKET LIST."
+    ],
+    "right": "FreshFind brings every neighbourhood market, stall and seasonal crop into one simple page.*",
+    "note": "* Schedules are updated by our team."
+  },
+"power": {
+  "title": "Powered by Neighbours",
+  "text": [
+    "LOCALS FILL IN THE GAPS.",
+    "WE SAID FRESH TOMATOES.",
+    "THEY BROUGHT SIX KINDS."
+  ]
+},
+  "gallery": {
+    "a": "FROM SOIL,",
+    "b": " TO SHELF.",
+    "items": [
+  {
+    "src": "images/image-01.jpeg",
+    "c": "#8a6b52"
+  },
+  {
+    "src": "images/image-02.jpeg",
+    "c": "#b0623a"
+  },
+  {
+    "src": "images/image-03.jpeg",
+    "c": "#7b1f24"
+  },
+  {
+    "src": "images/image-04.jpeg",
+    "c": "#5a3b30"
+  },
+  {
+    "src": "images/image-05.jpeg",
+    "c": "#a8322d"
+  },
+  {
+    "src": "images/image-06.jpeg",
+    "c": "#c9b79a"
+  },
+  {
+    "src": "images/image-07.jpeg",
+    "c": "#3d5a3a"
+  },
+  {
+    "src": "images/image-08.jpeg",
+    "c": "#d8892b"
+  },
+  {
+    "src": "images/image-09.jpeg",
+    "c": "#6b3a5a"
+  }
+]
+  },
+  "features": [
+    {
+      "icon": "◐",
+      "title": "ALWAYS IN SEASON",
+      "p": "Every market lists what is growing right now, so you never arrive for mangoes in the wrong month.",
+      "big": [
+        "OPEN-NOW",
+        "HIGHLIGHTING"
+      ],
+      "foot": "Live clock check",
+      "sub": "Updates every second, not a guess.",
+      "formula": "open(t) = t ∈ [start, end]"
+    },
+    {
+      "icon": "◎",
+      "title": "PERFECTLY LOCAL",
+      "p": "Filters and sorting by distance, day and produce narrow hundreds of stalls down to the three you want.",
+      "big": [
+        "NOW 3 TAPS",
+        "AWAY"
+      ],
+      "foot": "Bookmark & export",
+      "sub": "Save markets, add notes, download your list.",
+      "formula": "score = w₁·distance + w₂·rating"
+    }
+  ],
+  "sustain": {
+    "small": "100% LOCAL",
+    "word": "freshness",
+    "p": "Short trips from farm to stall mean fewer miles, less waste and produce that still tastes like the field.",
+    "cards": [
+      {
+        "n": "48",
+        "h": "HOURS FROM FIELD TO STALL",
+        "p": "Most produce at FreshFind markets is picked within two days of sale."
+      },
+      {
+        "h": "THE SEASON CALENDAR",
+        "p": "See what is in season each month and buy it at its best and its cheapest.",
+        "img": ""
+      },
+      {
+        "h": "BRING YOUR OWN BASKET",
+        "p": "Most stalls fill your basket straight from the crate, so no plastic bags are needed.",
+        "img": ""
+      }
+    ]
+  },
+  "products": [
+    {
+      "n": "Tomato",
+      "category": "VEGETABLE",
+      "badge": "LOCAL PICK",
+      "season": "FRESH",
+      "price": "Rs. 180 / kg",
+      "d": "Juicy local tomatoes with a bright, balanced flavour.",
+      "detail": "Great for salads, sauces and everyday cooking. Best kept cool and used fresh.",
+      "img": "images/tomato.jpg"
+    },
+    {
+      "n": "Carrot",
+      "category": "ROOT VEGETABLE",
+      "badge": "FRESH TODAY",
+      "season": "FRESH",
+      "price": "Rs. 160 / kg",
+      "d": "Crunchy, naturally sweet carrots picked for freshness.",
+      "detail": "A versatile seasonal vegetable for salads, soups, roasting and fresh juice.",
+      "img": "images/carrot.jpeg"
+    },
+    {
+      "n": "Spinach",
+      "category": "LEAFY GREEN",
+      "badge": "LOCAL PICK",
+      "season": "SEASONAL",
+      "price": "Rs. 120 / bunch",
+      "d": "Fresh leafy spinach with a soft, earthy taste.",
+      "detail": "Ideal for saag, curries, omelettes and smoothies. Wash thoroughly before use.",
+      "img": "images/Spinach.jpg"
+    },
+    {
+      "n": "Capsicum",
+      "category": "VEGETABLE",
+      "badge": "FRESH TODAY",
+      "season": "FRESH",
+      "price": "Rs. 260 / kg",
+      "d": "Crisp green capsicum for colourful everyday meals.",
+      "detail": "Works well in stir-fries, sandwiches, pizza and salads. Keep refrigerated.",
+      "img": "images/Capsicum.jpg"
+    },
+    {
+      "n": "Potato",
+      "category": "ROOT VEGETABLE",
+      "badge": "EVERYDAY PICK",
+      "season": "FRESH",
+      "price": "Rs. 140 / kg",
+      "d": "Everyday potatoes with a firm texture.",
+      "detail": "A kitchen staple for fries, curries, mash and roasting. Store in a cool dark place.",
+      "img": "images/Potato.jpeg"
+    },
+    {
+      "n": "Cucumber",
+      "category": "VEGETABLE",
+      "badge": "FRESH TODAY",
+      "season": "SEASONAL",
+      "price": "Rs. 150 / kg",
+      "d": "Cool, crisp cucumbers with a clean refreshing bite.",
+      "detail": "Perfect for salads, raita and chilled dishes. Keep refrigerated for best crunch.",
+      "img": "images/Cucumber.jpg"
+    },
+    {
+      "n": "Onion",
+      "category": "ROOT VEGETABLE",
+      "badge": "LOCAL PICK",
+      "season": "FRESH",
+      "price": "Rs. 170 / kg",
+      "d": "Fresh onions with a clean, sharp flavour for everyday cooking.",
+      "detail": "A kitchen essential for curries, sauces and salads. Store in a cool, dry place.",
+      "img": "images/Onion.jpg"
+    },
+    {
+      "n": "Garlic",
+      "category": "ROOT VEGETABLE",
+      "badge": "FRESH TODAY",
+      "season": "FRESH",
+      "price": "Rs. 420 / kg",
+      "d": "Aromatic garlic bulbs with a strong, fresh flavour.",
+      "detail": "Use cloves in marinades, curries, sauces and roasted dishes. Keep dry and ventilated.",
+      "img": "images/Garlic.jpg"
+    },
+    {
+      "n": "Cauliflower",
+      "category": "VEGETABLE",
+      "badge": "LOCAL PICK",
+      "season": "SEASONAL",
+      "price": "Rs. 220 / kg",
+      "d": "Firm cauliflower with compact, fresh florets.",
+      "detail": "Good for curries, roasting and light steaming. Refrigerate after purchase.",
+      "img": "images/Cauliflower.jpg"
+    },
+    {
+      "n": "Peas",
+      "category": "VEGETABLE",
+      "badge": "SEASONAL PICK",
+      "season": "SEASONAL",
+      "price": "Rs. 280 / kg",
+      "d": "Sweet green peas with a bright, fresh bite.",
+      "detail": "Best for pulao, curries, soups and simple side dishes. Use while fresh.",
+      "img": "images/Peas.jpg"
+    },
+    {
+      "n": "Brinjal",
+      "category": "VEGETABLE",
+      "badge": "LOCAL PICK",
+      "season": "FRESH",
+      "price": "Rs. 190 / kg",
+      "d": "Tender brinjal with a soft texture when cooked.",
+      "detail": "Works well in curries, bharta and roasting. Choose firm, unblemished pieces.",
+      "img": "images/Brinjal.jpg"
+    },
+    {
+      "n": "Lady Finger",
+      "category": "VEGETABLE",
+      "badge": "FRESH TODAY",
+      "season": "SEASONAL",
+      "price": "Rs. 240 / kg",
+      "d": "Young okra with a crisp, tender texture.",
+      "detail": "Great for bhindi dishes and quick frying. Keep dry before cooking.",
+      "img": "images/Lady Finger.jpg"
+    },
+    {
+      "n": "Pumpkin",
+      "category": "VEGETABLE",
+      "badge": "SEASONAL PICK",
+      "season": "SEASONAL",
+      "price": "Rs. 180 / kg",
+      "d": "Naturally sweet pumpkin with a rich, soft texture.",
+      "detail": "Useful for soups, curries and roasting. Store cut pieces refrigerated.",
+      "img": "images/Pumpkin.jpg"
+    },
+    {
+      "n": "Radish",
+      "category": "ROOT VEGETABLE",
+      "badge": "FRESH TODAY",
+      "season": "FRESH",
+      "price": "Rs. 130 / bunch",
+      "d": "Crisp radish with a clean peppery bite.",
+      "detail": "Enjoy raw in salads or cooked in seasonal dishes. Remove leafy tops before storing.",
+      "img": "images/Radish.jpg"
+    },
+    {
+      "n": "Red Chilli",
+      "category": "ROOT VEGETABLE",
+      "badge": "LOCAL PICK",
+      "season": "SEASONAL",
+      "price": "Rs. 210 / kg",
+      "d": "Earthy beetroot with a naturally sweet flavour.",
+      "detail": "Excellent roasted, boiled or grated into salads. Keep chilled for longer freshness.",
+      "img": "images/RedChilli.jpg"
+    }
+  ],
+  "markets": [
+    {
+      "id": "gulshan-farmers",
+      "area": "Gulshan",
+      "name": "Gulshan Fresh Farmers Market",
+      "location": "Gulshan-e-Iqbal, Karachi",
+      "days": "Saturday & Sunday",
+      "time": "8:00 AM — 2:00 PM",
+      "audience": "Residents / General Visitors",
+      "produce": [
+        "Tomato",
+        "Carrot",
+        "Spinach",
+        "Potato",
+        "Onion"
+      ]
+    },
+    {
+      "id": "clifton-harvest",
+      "area": "Clifton",
+      "name": "Clifton Weekend Harvest",
+      "location": "Clifton Block 5, Karachi",
+      "days": "Friday & Sunday",
+      "time": "9:00 AM — 3:00 PM",
+      "audience": "Residents / General Visitors",
+      "produce": [
+        "Capsicum",
+        "Cucumber",
+        "Tomato",
+        "Carrot"
+      ]
+    },
+    {
+      "id": "dha-green",
+      "area": "DHA",
+      "name": "DHA Green Market",
+      "location": "DHA Phase 6, Karachi",
+      "days": "Saturday",
+      "time": "7:30 AM — 1:30 PM",
+      "audience": "Residents / General Visitors",
+      "produce": [
+        "Spinach",
+        "Peas",
+        "Cauliflower",
+        "Radish",
+        "Beetroot"
+      ]
+    },
+    {
+      "id": "nazimabad-local",
+      "area": "Nazimabad",
+      "name": "Nazimabad Local Produce Market",
+      "location": "North Nazimabad, Karachi",
+      "days": "Sunday",
+      "time": "8:00 AM — 1:00 PM",
+      "audience": "Residents / General Visitors",
+      "produce": [
+        "Potato",
+        "Onion",
+        "Garlic",
+        "Brinjal",
+        "Lady Finger"
+      ]
+    },
+    {
+      "id": "pechs-community",
+      "area": "PECHS",
+      "name": "PECHS Community Farmers Market",
+      "location": "PECHS Block 2, Karachi",
+      "days": "Saturday & Sunday",
+      "time": "8:30 AM — 2:30 PM",
+      "audience": "Residents / General Visitors",
+      "produce": [
+        "Tomato",
+        "Spinach",
+        "Capsicum",
+        "Pumpkin",
+        "Carrot"
+      ]
+    },
+    {
+      "id": "federal-b",
+      "area": "Federal B Area",
+      "name": "Federal B Fresh Market",
+      "location": "Federal B Area, Karachi",
+      "days": "Friday & Saturday",
+      "time": "8:00 AM — 1:30 PM",
+      "audience": "Residents / General Visitors",
+      "produce": [
+        "Cucumber",
+        "Peas",
+        "Brinjal",
+        "Lady Finger",
+        "Radish"
+      ]
+    }
+  ],
+  "seasons": [
+    {
+      "name": "Spring",
+      "tag": "MAR — MAY",
+      "p": "Fresh peas, spinach, carrots and tender leafy greens are easy picks as the weather warms.",
+      "img": "images/spring.jpg"
+    },
+    {
+      "name": "Summer",
+      "tag": "JUN — AUG",
+      "p": "Choose heat-loving produce such as cucumber, capsicum, okra and fresh herbs.",
+      "img": "images/Summer.jpg"
+    },
+    {
+      "name": "Autumn",
+      "tag": "SEP — NOV",
+      "p": "Look for tomatoes, carrots, pumpkin and other crops that transition into cooler days.",
+      "img": "images/Autumn.jpg"
+    },
+    {
+      "name": "Winter",
+      "tag": "DEC — FEB",
+      "p": "Cooler weather brings hearty greens, root vegetables and produce that stores well.",
+      "img": "images/Winter.jpg"
+    }
+  ],
+  "final": {
+    "small": "OUR OPEN DIRECTORY",
+    "title": "FRESHFIND-1",
+    "btns": [
+      "Market guide",
+      "Open map",
+      "Saved list"
+    ],
+    "line": [
+      "Know a market we have missed?",
+      "Tell us and we will add it."
+    ],
+    "cta": "hello@freshfind.local"
+  }
+}
+
